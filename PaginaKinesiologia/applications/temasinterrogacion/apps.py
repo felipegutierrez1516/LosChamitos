@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class TemasinterrogacionConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'temasinterrogacion'
+    name = 'applications.temasinterrogacion'
