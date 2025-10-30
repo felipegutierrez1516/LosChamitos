@@ -37,15 +37,16 @@ INSTALLED_APPS = [
     #APLICACIONES PROPIAS
 
     'applications.Inicio',
+    'applications.aprendizajeesperado',
     'applications.categoria',
     'applications.curso',
-    'applications.aprendizajeesperado',
-    'applications.etapas',
+    'applications.etapa',
     'applications.evaluacion',
     'applications.login',
     'applications.paciente',
     'applications.partesdelcuerpo',
-    'applications.temasinterrogacion',
+    'applications.temmasinterrogacion',
+ 
 ]
 
 MIDDLEWARE = [
