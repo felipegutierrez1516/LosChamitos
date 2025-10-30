@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+
     
 class Aprendizajeesperado(models.Model):
     nombre = models.CharField('Objetivo', max_length=150, null=False)
@@ -8,5 +9,4 @@ class Aprendizajeesperado(models.Model):
 
     def __str__(self):
         return str(self.id) + '-' + self.nombre  
-
 

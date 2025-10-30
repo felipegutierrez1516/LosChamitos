@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'applications.partesdelcuerpo',
     'applications.temasdeinterrogacion',
     'applications.aprendizajeesperado',
-
 ]
 
 MIDDLEWARE = [

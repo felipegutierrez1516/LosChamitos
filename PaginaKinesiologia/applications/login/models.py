@@ -1,7 +1,6 @@
 from django.db import models
 
 # Create your models here.
-
 class Docentes(models.Model):
     nombre = models.CharField('Nombre del Docente', max_length=150, null=False)
     apellido = models.CharField('Apellido del Docente', max_length=150, null=False)
