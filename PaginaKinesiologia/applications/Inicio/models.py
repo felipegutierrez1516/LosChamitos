@@ -2,7 +2,10 @@ from django.db import models
 
 # Create your models here.
 
+
 class Docentes(models.Model):
+
+
     nombre = models.CharField('Nombre del Docente', max_length=150, null=False)
     apellido = models.CharField('Apellido del Docente', max_length=150, null=False)
     correo = models.EmailField('Correo del Docente', max_length=150, null=False, unique=True)
@@ -32,7 +35,11 @@ class Curso(models.Model):
     descripcion = models.CharField('Descripción', max_length = 500, null=False)
     programa = models.TextField('Programa Asignatura', max_length=150, null=False)
     estado = models.BooleanField('Estado del Curso', null =False)
+
     docente= models.ForeignKey(Docentes, on_delete=models.CASCADE)
+
+    docente= models.ForeignKey('Docente', on_delete=models.CASCADE)
+
     objetivo = models.ForeignKey('Aprendizajeesperado', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -54,7 +61,11 @@ class Solicitud_Estudiante(models.Model):
     estado = models.BooleanField('Estado de la Solicitud', null =False)
     curso = models.ForeignKey('Curso', null=False)
     estudiante = models.ForeignKey('Estudiante', null =False)
+
     docente= models.ForeignKey(Docentes, on_delete=models.CASCADE)
+
+    docente= models.ForeignKey('Docente', on_delete=models.CASCADE)
+
 
     def __str__(self):
         return str(self.id) + '-' + self.nombre
@@ -136,7 +147,10 @@ class Envio_Docente(models.Model):
     descripcion = models.TextField('Descripción', null=False)
     nombreestudiante = models.TextField('Nombre estudiante:', null=False)
     fechaentrega = models.DateField('Fecha de entrega', null = False)
+
     docente = models.ForeignKey(Docentes, on_delete=models.CASCADE)
+
+
     respuestaevaluacion = models.ForeignKey('Respuesta_Evaluacion', on_delete=models.CASCADE)
 
 

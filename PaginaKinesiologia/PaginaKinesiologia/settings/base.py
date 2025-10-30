@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'applications.paciente',
     'applications.partesdelcuerpo',
     'applications.temmasinterrogacion',
+ 
 ]
 
 MIDDLEWARE = [

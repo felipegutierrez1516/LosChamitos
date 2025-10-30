@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+
 class Evaluacion(models.Model):
     nombre = models.CharField('Evaluacion', max_length=150, null=False)
     descripcion = models.CharField('descripcion', max_length=150, null=False)
@@ -37,3 +38,4 @@ class Envio_Docente(models.Model):
 
     def _str_(self):
         return str(self.id) + '-' + self.nombre
+
