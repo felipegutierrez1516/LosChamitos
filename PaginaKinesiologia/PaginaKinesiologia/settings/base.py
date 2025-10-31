@@ -32,21 +32,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
 
 
     #APLICACIONES PROPIAS
 
-    'applications.Inicio',
-    'applications.aprendizajeesperado',
-    'applications.categoria',
-    'applications.curso',
-    'applications.etapa',
-    'applications.evaluacion',
-    'applications.login',
-    'applications.paciente',
-    'applications.partesdelcuerpo',
-    'applications.temmasinterrogacion',
- 
+    'applications.Caso_Clínico',
+    'applications.Cursos',
+    'applications.Envíos',
+    'applications.Estudiante',
+    'applications.Evaluaciones',
+    'applications.Tema',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+
 ]
 
 ROOT_URLCONF = 'PaginaKinesiologia.urls'
@@ -122,4 +120,23 @@ JAZZMIN_SETTINGS = {
     "site_logo": "img/logo_UCN.png",
     "custom_css": "css/admin_custom.css",
     "custom_js": None,
+
+    "icons": {
+        "auth.User": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "Caso_Clínico.Paciente_Ficticio": "fas fa-user-injured",
+        "Caso_Clínico.Etapa": "fas fa-stream",
+        "Caso_Clínico.Partes_del_Cuerpo": "fas fa-person",
+        "Cursos.Docente": "fas fa-chalkboard-teacher",
+        "Cursos.Categoria_Clinica": "fas fa-dna",
+        "Cursos.Curso": "fas fa-book",
+        "Cursos.Aprendizaje_Esperado": "fas fa-bullseye",
+        "Estudiante.Estudiante": "fas fa-user-graduate",
+        "Estudiante.Solicitud_Inscripcion": "fas fa-file-signature",
+        "Estudiante.Progreso": "fas fa-chart-line",
+        "Tema.Tema_Interrogacion": "fas fa-question-circle",
+        "Evaluaciones.Evaluacion": "fas fa-clipboard-check",
+        "Evaluaciones.Respuesta_Evaluacion": "fas fa-check-square",
+        "Envíos.Envio_Docente": "fas fa-envelope-open",
+    }
 }
