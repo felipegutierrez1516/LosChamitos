@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'applications.Estudiante',
     'applications.Evaluaciones',
     'applications.Tema',
+    'applications.Inicio',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +63,7 @@ ROOT_URLCONF = 'PaginaKinesiologia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -140,3 +141,13 @@ JAZZMIN_SETTINGS = {
         "Envíos.Envio_Docente": "fas fa-envelope-open",
     }
 }
+
+
+STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [BASE_DIR / "static"]
+# 🔹 Agrega esta línea:
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = '/media/'

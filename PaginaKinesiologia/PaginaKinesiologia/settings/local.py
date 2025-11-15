@@ -12,9 +12,9 @@ ALLOWED_HOSTS = []
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME' : '',
-        'USER' : '',
-        'PASSWORD' : '',
+        'NAME' : 'db_paginakinesiologia',
+        'USER' : 'user_paginakinesiologia',
+        'PASSWORD' : 'barca',
         'HOST' : 'localhost',
         'PORT' : '5432'
     }
@@ -24,8 +24,4 @@ DATABASES = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [BASE_DIR / "static"]
-# 🔹 Agrega esta línea:
-STATIC_ROOT = BASE_DIR / "staticfiles"
