@@ -14,7 +14,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME' : 'db_paginakinesiologia',
         'USER' : 'user_paginakinesiologia',
-        'PASSWORD' : '07112002',
+        'PASSWORD' : 'fede2020',
         'HOST' : 'localhost',
         'PORT' : '5432'
     }
