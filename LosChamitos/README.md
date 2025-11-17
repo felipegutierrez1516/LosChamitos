@@ -23,14 +23,3 @@ Instrucciones
     4. Configuracion de la base de datos; a traves de Postgreso se configura la conexion a la base de datos
     5. Se ejecutan las migraciones para crear la estructura de la base de datos y se crea el superusuario para acceder al django admin
     6. Iniciar el servidor de desarrollo
-    7. Abrir el proyecto en Visual Studio Code
-    8. Configurar estructura de Settings
-    9. Crear la carpeta de aplicaciones
-    10. Preparar la base de datos PostgreSQL
-    11. Instalar el motor de PostgreSQL en Django
-    12. Configurar DATABASE en local.py
-    13. Ejecutar migraciones iniciales
-    14. Crear los modelos (tablas) en models.py
-    15. Registrar modelos en el administrador de Django
-    16. Crear el superusuario
-    17. Ejecutar el servidor de desarrollo

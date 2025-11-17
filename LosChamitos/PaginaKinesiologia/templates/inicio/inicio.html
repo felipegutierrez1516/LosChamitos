@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Kinesiología — Casos de Pacientes (UCN)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* ====== PALETA AZUL/BLANCO ====== */
+    :root{
+      --azul-900:#0a2a5e;
+      --azul-700:#1457a3;
+      --azul-600:#1a69c7;
+      --azul-050:#f3f7fe;
+      --azul-025:#f8fbff;
+      --borde:#e5eaf3;
+      --texto:#172236;
+      --muted:#5b6b86;
+      --peligro:#e53935;
+      --exito:#1b9360;
+    }
+    *{box-sizing:border-box;}
+
+    html,body{
+      margin:0;
+      height:100%;
+      background:var(--azul-025);
+      color:var(--texto);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+    }
+    a{
+      color:var(--azul-600);
+      text-decoration:none;
+    }
+    a:hover{text-decoration:underline;}
+
+    /* ====== LAYOUT GENERAL ====== */
+    .pagina{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+    .barra-superior{
+      background:linear-gradient(90deg,var(--azul-900),var(--azul-700));
+      color:white;
+      padding:0.75rem 1.5rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      box-shadow:0 2px 6px rgba(0,0,0,0.25);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+    .barra-superior__titulo{
+      font-size:1.05rem;
+      font-weight:600;
+      letter-spacing:0.02em;
+    }
+    .barra-superior__sub{
+      font-size:0.85rem;
+      opacity:0.9;
+    }
+
+    .contenido{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding:3rem 2rem 4rem;
+    }
+    .contenedor{
+      width:100%;
+      max-width:1100px;
+    }
+
+    /* ====== TARJETAS ====== */
+    .tarjeta{
+      background:white;
+      border-radius:18px;
+      border:1px solid var(--borde);
+      box-shadow:0 8px 24px rgba(15,35,95,0.12);
+      padding:2rem 2.5rem 2rem;
+      display:flex;
+      flex-direction:column;
+      gap:1.25rem;
+      width:100%;
+      margin-inline:auto;
+    }
+    .tarjeta--info{
+      background:radial-gradient(circle at top,var(--azul-050),white);
+    }
+
+    .grid-layout{
+      display:grid;
+      grid-template-columns:1.1fr 1.4fr;
+      gap:2rem;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .grid-layout{
+        grid-template-columns:1fr;
+      }
+    }
+
+    h1,h2,h3{
+      margin:0;
+      font-weight:600;
+      color:var(--azul-900);
+    }
+    .titulo-principal{
+      font-size:1.45rem;
+      margin-bottom:0.25rem;
+    }
+    .texto-muted{
+      font-size:0.9rem;
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    /* ====== FORMULARIO LOGIN ====== */
+    .formulario{
+      display:flex;
+      flex-direction:column;
+      gap:1rem;
+    }
+    .grupo-campo{
+      display:flex;
+      flex-direction:column;
+      gap:0.35rem;
+    }
+    .etiqueta{
+      font-size:0.9rem;
+      font-weight:500;
+      color:var(--texto);
+    }
+    .input{
+      border-radius:12px;
+      border:1px solid var(--borde);
+      padding:0.65rem 0.75rem;
+      font-size:0.95rem;
+      outline:none;
+      background:var(--azul-025);
+      transition:border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+    .input:focus{
+      border-color:var(--azul-600);
+      background:white;
+      box-shadow:0 0 0 1px rgba(26,105,199,0.2);
+    }
+    .texto-ayuda{
+      font-size:0.8rem;
+      color:var(--muted);
+    }
+    .fila-opciones{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:0.85rem;
+      gap:0.75rem;
+      flex-wrap:wrap;
+    }
+
+    .boton{
+      border:none;
+      border-radius:999px;
+      padding:0.7rem 1.3rem;
+      font-size:0.95rem;
+      font-weight:600;
+      cursor:pointer;
+      background:var(--azul-600);
+      color:white;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:0.35rem;
+      box-shadow:0 8px 18px rgba(26,105,199,0.35);
+      transition:transform 0.08s ease, box-shadow 0.08s ease, background 0.12s ease;
+    }
+    .boton:hover{
+      transform:translateY(-1px);
+      background:var(--azul-700);
+      box-shadow:0 12px 24px rgba(26,105,199,0.42);
+    }
+    .boton:active{
+      transform:translateY(0);
+      box-shadow:0 6px 16px rgba(26,105,199,0.3);
+    }
+
+    .boton-sec{
+      border-radius:999px;
+      border:1px solid var(--borde);
+      padding:0.55rem 1.1rem;
+      font-size:0.9rem;
+      background:white;
+      color:var(--azul-900);
+      cursor:pointer;
+    }
+    .boton-sec:hover{
+      background:var(--azul-050);
+    }
+
+    .mensaje-error,
+    .mensaje-exito{
+      font-size:0.85rem;
+      margin-bottom:0.25rem;
+      display:none;
+    }
+    .mensaje-error{color:var(--peligro);}
+    .mensaje-exito{color:var(--exito);}
+
+    .seccion-oculta{display:none;}
+
+    /* ====== GESTIÓN DE CURSOS ====== */
+    .seccion-cursos__encabezado{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:0.75rem;
+      flex-wrap:wrap;
+    }
+    .seccion-cursos__titulo{
+      font-size:1.25rem;
+    }
+    .seccion-cursos__usuario{
+      font-size:0.85rem;
+      color:var(--muted);
+      text-align:right;
+    }
+
+    .grid-cursos{
+      display:grid;
+      grid-template-columns:1.1fr 1.1fr;
+      gap:1.5rem;
+      margin-top:0.75rem;
+    }
+    @media (max-width: 800px){
+      .grid-cursos{grid-template-columns:1fr;}
+    }
+    .subtitulo{
+      font-size:0.95rem;
+      font-weight:600;
+      color:var(--azul-900);
+      margin-bottom:0.35rem;
+    }
+
+    .fila-inscripcion{
+      display:flex;
+      gap:0.5rem;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .input-pequeno{
+      flex:1;
+      min-width:160px;
+      border-radius:999px;
+      border:1px solid var(--borde);
+      padding:0.5rem 0.75rem;
+      font-size:0.9rem;
+      background:white;
+    }
+
+    .lista-cursos{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      flex-direction:column;
+      gap:0.3rem;
+      max-height:210px;
+      overflow:auto;
+    }
+    .curso-item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:0.75rem;
+      padding:0.35rem 0;
+      cursor:pointer;
+    }
+    .curso-item__codigo{
+      font-weight:600;
+      color:var(--azul-700);
+    }
+    .curso-item__nombre{
+      font-size:0.85rem;
+      color:var(--texto);
+    }
+    .tag-estado{
+      font-size:0.8rem;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+
+    .nota-pequena{
+      font-size:0.8rem;
+      color:var(--muted);
+      margin-top:0.1rem;
+    }
+
+    /* ====== FLUJO DENTRO DEL CURSO ====== */
+    .seccion-curso-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:0.75rem;
+      flex-wrap:wrap;
+      margin-bottom:0.75rem;
+    }
+    .seccion-curso-titulo{
+      font-size:1.2rem;
+      font-weight:600;
+      color:var(--azul-900);
+    }
+    .breadcrumb-curso{
+      font-size:0.8rem;
+      color:var(--muted);
+    }
+
+    .chips-pasos{
+      display:flex;
+      flex-wrap:wrap;
+      gap:0.4rem;
+      margin-bottom:0.75rem;
+      font-size:0.8rem;
+    }
+    .chip-paso{
+      padding:0.25rem 0.6rem;
+      border-radius:999px;
+      border:1px solid var(--borde);
+      background:var(--azul-025);
+      color:var(--muted);
+    }
+    .chip-paso--activo{
+      border-color:var(--azul-600);
+      color:var(--azul-700);
+      font-weight:600;
+      background:var(--azul-050);
+    }
+
+    .seccion-curso{
+      margin-top:0.75rem;
+    }
+
+    /* grid general reutilizado */
+    .grid{
+      display:grid;
+      gap:0.9rem;
+    }
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+    @media (max-width:720px){
+      .grid-2,.grid-3{grid-template-columns:1fr;}
+    }
+
+    label{
+      font-size:0.8rem;
+      color:var(--muted);
+      font-weight:600;
+    }
+    textarea{
+      width:100%;
+      padding:0.7rem 0.8rem;
+      border-radius:12px;
+      border:1px solid var(--borde);
+      background:#fff;
+      color:var(--texto);
+      min-height:110px;
+      resize:vertical;
+      font-size:0.9rem;
+      font-family:inherit;
+    }
+
+    .fila-botones{
+      display:flex;
+      flex-wrap:wrap;
+      gap:0.5rem;
+      margin-top:0.5rem;
+    }
+
+    .separador{
+      height:1px;
+      background:var(--borde);
+      margin:1rem 0;
+    }
+
+    /* tarjetas de casos */
+    .tarjeta-caso{
+      background:var(--azul-050);
+      border-radius:16px;
+      border:1px solid var(--borde);
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      align-items:stretch;
+    }
+    .tarjeta-caso img{
+      width:100%;
+      border-radius:12px;
+      object-fit:cover;
+      max-height:140px;
+    }
+    .tarjeta-titulo{
+      font-weight:700;
+      color:var(--azul-900);
+      margin:4px 0;
+      font-size:0.95rem;
+    }
+    .tarjeta-desc{
+      font-size:0.8rem;
+      color:var(--muted);
+      flex:1;
+    }
+    .btn-caso{
+      align-self:flex-start;
+      font-size:0.85rem;
+      padding-inline:0.9rem;
+    }
+
+    /* tabla resumen */
+    table{
+      width:100%;
+      border-collapse:collapse;
+      background:#fff;
+      font-size:0.85rem;
+    }
+    th,td{
+      padding:0.55rem 0.4rem;
+      border-bottom:1px solid var(--borde);
+      text-align:left;
+      vertical-align:top;
+    }
+    th{
+      color:var(--muted);
+      font-weight:700;
+      width:28%;
+    }
+
+    .pie{
+      margin-top:1.5rem;
+      font-size:0.75rem;
+      color:var(--muted);
+      text-align:center;
+    }
+  </style>
+</head>
+<body>
+  <div class="pagina">
+    <!-- ====== BARRA SUPERIOR ====== -->
+    <header class="barra-superior">
+      <div>
+        <div class="barra-superior__titulo">Kinesiología — Casos de Pacientes</div>
+        <div class="barra-superior__sub">Universidad Católica del Norte · Plataforma estudiantes</div>
+      </div>
+    </header>
+
+    <!-- ====== CONTENIDO ====== -->
+    <main class="contenido">
+      <div class="contenedor">
+
+        <!-- ====== BLOQUE LOGIN + INFO ====== -->
+        <section id="bloque-login" class="grid-layout">
+          <!-- IZQUIERDA -->
+          <section class="tarjeta tarjeta--info">
+            <h1 class="titulo-principal">Acceso estudiantes UCN</h1>
+            <p class="texto-muted">
+              Ingresa con tu correo institucional <strong>@alumnos.ucn.cl</strong> para gestionar tu participación en los casos clínicos de Kinesiología.
+              Una vez validado el correo, podrás inscribirte en cursos y revisar rápidamente en cuáles ya estás inscrito.
+            </p>
+            <ul class="texto-muted" style="font-size:0.9rem; padding-left:1.1rem; margin:0.5rem 0 0;">
+              <li>Explora los casos de pacientes asignados a tu curso.</li>
+              <li>Revisa el estado de tus inscripciones.</li>
+              <li>Centraliza el acceso a todos tus cursos en un solo lugar.</li>
+            </ul>
+          </section>
+
+          <!-- DERECHA: LOGIN -->
+          <section class="tarjeta">
+            <div id="mensaje-exito" class="mensaje-exito"></div>
+            <div id="mensaje-error" class="mensaje-error"></div>
+
+            <section id="seccion-login">
+              <h2 style="font-size:1.1rem; margin-bottom:0.35rem;">Inicio de sesión</h2>
+              <p class="texto-muted" style="margin-bottom:0.3rem;">
+                Usa tu correo institucional de estudiante para continuar.
+              </p>
+
+              <form id="formulario-login" class="formulario">
+                <div class="grupo-campo">
+                  <label for="correo" class="etiqueta">Correo institucional</label>
+                  <input
+                    type="email"
+                    id="correo"
+                    class="input"
+                    placeholder="nombre.apellido@alumnos.ucn.cl"
+                    required
+                  />
+                  <span class="texto-ayuda">
+                    Solo se permitirá el acceso a correos que terminen en <strong>@alumnos.ucn.cl</strong>.
+                  </span>
+                </div>
+
+                <div class="grupo-campo">
+                  <label for="contrasena" class="etiqueta">Contraseña</label>
+                  <input
+                    type="password"
+                    id="contrasena"
+                    class="input"
+                    placeholder="Ingresa tu contraseña"
+                    required
+                  />
+                </div>
+
+                <div class="fila-opciones">
+                  <label style="display:flex; align-items:center; gap:0.4rem;">
+                    <input type="checkbox" style="accent-color:var(--azul-600);" />
+                    <span>Recordar sesión</span>
+                  </label>
+                  <a href="#">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <button type="submit" class="boton">
+                  Iniciar sesión
+                </button>
+              </form>
+            </section>
+          </section>
+        </section>
+
+        <!-- ====== GESTIÓN DE CURSOS (DESPUÉS DEL LOGIN) ====== -->
+        <section id="seccion-cursos" class="tarjeta seccion-oculta">
+          <div class="seccion-cursos__encabezado">
+            <div>
+              <h2 class="seccion-cursos__titulo">Gestión de cursos</h2>
+              <p class="texto-muted" style="margin-top:0.25rem;">
+                Desde aquí puedes inscribirte a nuevos cursos y revisar aquellos en los que ya estás participando.
+                Para entrar al contenido del curso, haz clic en el curso que desees.
+              </p>
+            </div>
+            <div class="seccion-cursos__usuario" id="texto-usuario"></div>
+          </div>
+
+          <div class="grid-cursos">
+            <!-- INSCRIPCIÓN -->
+            <div>
+              <div class="subtitulo">Inscribirse a un curso</div>
+              <p class="texto-muted" style="font-size:0.85rem;">
+                Ingresa el código del curso entregado por tu docente y presiona “Inscribirme”.
+              </p>
+              <div class="fila-inscripcion">
+                <input
+                  type="text"
+                  id="campo-codigo-curso"
+                  class="input-pequeno"
+                  placeholder="Ej: KIN-301, KIN-402..."
+                />
+                <button type="button" id="boton-inscribir" class="boton" style="padding-inline:1rem;">
+                  Inscribirme
+                </button>
+              </div>
+            </div>
+
+            <!-- MIS CURSOS -->
+            <div>
+              <div class="subtitulo">Mis cursos inscritos</div>
+              <ul id="lista-cursos" class="lista-cursos">
+                <li class="curso-item" data-codigo="KIN-301">
+                  <div>
+                    <div class="curso-item__codigo">KIN-301</div>
+                    <div class="curso-item__nombre">Evaluación funcional del sistema musculoesquelético</div>
+                  </div>
+                  <span class="tag-estado">Entrar al curso</span>
+                </li>
+                <li class="curso-item" data-codigo="KIN-402">
+                  <div>
+                    <div class="curso-item__codigo">KIN-402</div>
+                    <div class="curso-item__nombre">Casos clínicos de rehabilitación respiratoria</div>
+                  </div>
+                  <span class="tag-estado">Entrar al curso</span>
+                </li>
+              </ul>
+              <p class="nota-pequena">
+                Haz clic en un curso para entrar al flujo de casos de pacientes.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====== FLUJO DENTRO DE UN CURSO ====== -->
+        <section id="curso-flujo" class="tarjeta seccion-oculta">
+          <div class="seccion-curso-header">
+            <div>
+              <div class="seccion-curso-titulo" id="titulo-curso-activo">Curso seleccionado</div>
+              <div class="breadcrumb-curso" id="breadcrumb-curso">Paso 1 · Selección de caso</div>
+            </div>
+            <button type="button" class="boton-sec" id="boton-volver-cursos">← Volver a mis cursos</button>
+          </div>
+
+          <!-- chips pasos -->
+          <div class="chips-pasos">
+            <span class="chip-paso chip-paso--activo" data-paso="casos">1. Elegir caso</span>
+            <span class="chip-paso" data-paso="video">2. Ver video</span>
+            <span class="chip-paso" data-paso="datos">3. Datos y síntomas</span>
+            <span class="chip-paso" data-paso="examen">4. Examen físico</span>
+            <span class="chip-paso" data-paso="diagnostico">5. Diagnóstico</span>
+            <span class="chip-paso" data-paso="plan">6. Plan</span>
+            <span class="chip-paso" data-paso="resumen">7. Resumen</span>
+          </div>
+
+          <!-- SUBSECCIONES DEL CURSO -->
+
+          <!-- 1. CASOS -->
+          <section id="curso-casos" class="seccion-curso subseccion-curso">
+            <h3>Casos de pacientes</h3>
+            <p class="texto-muted">
+              Selecciona un caso para este curso. Primero verás el video y luego podrás completar la información clínica.
+            </p>
+
+            <div class="grid grid-3" style="margin-top:0.4rem;">
+              <!-- Caso 1 -->
+              <div class="tarjeta-caso">
+                <img src="paciente1.jpg" alt="Paciente caso 1" />
+                <div class="tarjeta-titulo">Caso 1 · Dolor lumbar</div>
+                <div class="tarjeta-desc">Paciente adulto joven con dolor lumbar mecánico de 2 semanas de evolución.</div>
+                <button class="boton btn-caso" data-accion="ver-video" data-caso="1" data-src="videos/caso1.mp4">
+                  Ver video del caso
+                </button>
+              </div>
+              <!-- Caso 2 -->
+              <div class="tarjeta-caso">
+                <img src="paciente2.jpg" alt="Paciente caso 2" />
+                <div class="tarjeta-titulo">Caso 2 · Esguince de tobillo</div>
+                <div class="tarjeta-desc">Paciente deportista con esguince lateral de tobillo grado II.</div>
+                <button class="boton btn-caso" data-accion="ver-video" data-caso="2" data-src="videos/caso2.mp4">
+                  Ver video del caso
+                </button>
+              </div>
+              <!-- Caso 3 -->
+              <div class="tarjeta-caso">
+                <img src="paciente3.jpg" alt="Paciente caso 3" />
+                <div class="tarjeta-titulo">Caso 3 · Rehabilitación post-op</div>
+                <div class="tarjeta-desc">Paciente post cirugía de rodilla en fase inicial de rehabilitación.</div>
+                <button class="boton btn-caso" data-accion="ver-video" data-caso="3" data-src="videos/caso3.mp4">
+                  Ver video del caso
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- 2. VIDEO -->
+          <section id="curso-video" class="seccion-curso subseccion-curso seccion-oculta">
+            <h3 id="titulo-caso-video">Video del caso</h3>
+            <p class="texto-muted">
+              Observa el video del paciente ficticio y luego completa la información del caso.
+            </p>
+            <video id="video-caso" controls style="width:100%; border-radius:16px; background:#000; margin-top:0.5rem;">
+              <source id="fuente-video-caso" src="" type="video/mp4" />
+              Tu navegador no soporta el elemento de video.
+            </video>
+
+            <div class="fila-botones">
+              <button type="button" class="boton" data-vista-curso="curso-datos">
+                Siguiente: datos del paciente
+              </button>
+              <button type="button" class="boton-sec" data-vista-curso="curso-casos">
+                Volver a casos
+              </button>
+            </div>
+          </section>
+
+          <!-- 3. DATOS DEL PACIENTE + SÍNTOMAS -->
+          <section id="curso-datos" class="seccion-curso subseccion-curso seccion-oculta">
+            <h3>Datos del paciente</h3>
+
+            <div class="grid">
+              <div class="grid grid-3">
+                <div>
+                  <label>Nombre</label>
+                  <input id="paciente_nombre" class="input" placeholder="Nombre y Apellido" />
+                </div>
+                <div>
+                  <label>Edad [años]</label>
+                  <input id="paciente_edad" class="input" type="number" min="0" />
+                </div>
+                <div>
+                  <label>Género</label>
+                  <select id="paciente_genero" class="input">
+                    <option value="">Seleccione…</option>
+                    <option>Femenino</option>
+                    <option>Masculino</option>
+                    <option>No binario</option>
+                    <option>Prefiero no decir</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-2">
+                <div>
+                  <label>Motivo de consulta</label>
+                  <input id="motivo" class="input" placeholder="Dolor lumbar, esguince, post-op…" />
+                </div>
+                <div>
+                  <label>Antecedentes relevantes</label>
+                  <input id="antecedentes" class="input" placeholder="HTA, DM2, cirugías, etc." />
+                </div>
+              </div>
+
+              <div>
+                <label>Notas generales</label>
+                <textarea id="notas_datos" placeholder="Observaciones generales…"></textarea>
+              </div>
+            </div>
+
+            <div class="separador"></div>
+
+            <h3>Síntomas del paciente</h3>
+            <div class="grid">
+              <div class="grid grid-2">
+                <div>
+                  <label>Dolor (EVA 0–10)</label>
+                  <input id="eva" class="input" type="number" min="0" max="10" />
+                </div>
+                <div>
+                  <label>Inicio</label>
+                  <select id="inicio" class="input">
+                    <option value="">Seleccione…</option>
+                    <option>Agudo</option>
+                    <option>Subagudo</option>
+                    <option>Crónico</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label>Localización / Irradiación</label>
+                <input id="localizacion" class="input" placeholder="Zona lumbar derecha, irradiación a glúteo…" />
+              </div>
+
+              <div>
+                <label>Descripción</label>
+                <textarea id="descripcion_sintomas" placeholder="Factores agravantes, alivio, 24h, banderas rojas…"></textarea>
+              </div>
+            </div>
+
+            <div class="fila-botones">
+              <button type="button" class="boton" data-vista-curso="curso-examen">Siguiente: examen físico</button>
+              <button type="button" class="boton-sec" data-vista-curso="curso-video">Volver al video</button>
+            </div>
+          </section>
+
+          <!-- 4. EXAMEN FÍSICO -->
+          <section id="curso-examen" class="seccion-curso subseccion-curso seccion-oculta">
+            <h3>Examen físico del paciente</h3>
+
+            <div class="grid grid-3">
+              <div>
+                <label>Inspección</label>
+                <textarea id="inspeccion" placeholder="Postura, asimetrías, marcha…"></textarea>
+              </div>
+              <div>
+                <label>Movilidad activa/pasiva</label>
+                <textarea id="movilidad" placeholder="Rangos, dolor al final de rango…"></textarea>
+              </div>
+              <div>
+                <label>Pruebas específicas</label>
+                <textarea id="pruebas" placeholder="SLR, FABER, test de compresión, etc."></textarea>
+              </div>
+            </div>
+
+            <div class="fila-botones">
+              <button type="button" class="boton" data-vista-curso="curso-diagnostico">Siguiente: diagnóstico</button>
+              <button type="button" class="boton-sec" data-vista-curso="curso-datos">Volver</button>
+            </div>
+          </section>
+
+          <!-- 5. DIAGNÓSTICO -->
+          <section id="curso-diagnostico" class="seccion-curso subseccion-curso seccion-oculta">
+            <h3>Diagnóstico del paciente</h3>
+
+            <div class="grid">
+              <div>
+                <label>Impresión clínica</label>
+                <input id="impresion" class="input" placeholder="Lumbalgia mecánica, etc." />
+              </div>
+              <div class="grid grid-2">
+                <div>
+                  <label>CIE-10 (opcional)</label>
+                  <input id="cie10" class="input" placeholder="M54.5, S33.5, etc." />
+                </div>
+                <div>
+                  <label>Prioridad</label>
+                  <select id="prioridad" class="input">
+                    <option value="">Seleccione…</option>
+                    <option>Baja</option>
+                    <option>Media</option>
+                    <option>Alta</option>
+                    <option>Crítica</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label>Notas</label>
+                <textarea id="notas_dx" placeholder="Justificación clínica y correlación…"></textarea>
+              </div>
+            </div>
+
+            <div class="fila-botones">
+              <button type="button" class="boton" data-vista-curso="curso-plan">Siguiente: plan de tratamiento</button>
+              <button type="button" class="boton-sec" data-vista-curso="curso-examen">Volver</button>
+            </div>
+          </section>
+
+          <!-- 6. PLAN DE TRATAMIENTO -->
+          <section id="curso-plan" class="seccion-curso subseccion-curso seccion-oculta">
+            <h3>Plan de tratamiento</h3>
+
+            <div class="grid grid-3">
+              <div>
+                <label>Objetivos</label>
+                <textarea id="objetivos" placeholder="Disminuir EVA a ≤3 en 2 semanas…"></textarea>
+              </div>
+              <div>
+                <label>Intervenciones</label>
+                <textarea id="intervenciones" placeholder="Terapia manual, ejercicio, educación…"></textarea>
+              </div>
+              <div>
+                <label>Frecuencia / Duración</label>
+                <textarea id="frecuencia" placeholder="2–3 sesiones/semana por 4–6 semanas…"></textarea>
+              </div>
+            </div>
+
+            <div class="fila-botones">
+              <button type="button" class="boton" data-vista-curso="curso-resumen">Ver resumen</button>
+              <button type="button" class="boton-sec" data-vista-curso="curso-diagnostico">Volver</button>
+            </div>
+          </section>
+
+          <!-- 7. RESUMEN -->
+          <section id="curso-resumen" class="seccion-curso subseccion-curso seccion-oculta">
+            <h3>Resumen del caso</h3>
+            <p class="texto-muted">
+              Este resumen se genera automáticamente a partir de la información ingresada en los pasos anteriores.
+            </p>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Bloque</th>
+                  <th>Resumen</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-resumen-curso"></tbody>
+            </table>
+
+            <div class="fila-botones">
+              <button type="button" class="boton" id="boton-enviar-respuestas">
+                Enviar respuestas
+              </button>
+              <button type="button" class="boton-sec" data-vista-curso="curso-plan">Volver al plan</button>
+              <button type="button" class="boton-sec" id="boton-volver-inicio-curso">Volver al inicio del curso</button>
+            </div>
+          </section>
+        </section>
+
+        <footer class="pie">
+          © <span id="anio"></span> Prototipo Los Chamitos
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <!-- ====== JS ====== -->
+  <script>
+    // Referencias generales
+    const formularioLogin = document.getElementById("formulario-login");
+    const seccionLoginBloque = document.getElementById("bloque-login");
+    const seccionCursos = document.getElementById("seccion-cursos");
+    const seccionCursoFlujo = document.getElementById("curso-flujo");
+
+    const mensajeError = document.getElementById("mensaje-error");
+    const mensajeExito = document.getElementById("mensaje-exito");
+    const campoCorreo = document.getElementById("correo");
+    const campoContrasena = document.getElementById("contrasena");
+    const textoUsuario = document.getElementById("texto-usuario");
+
+    const campoCodigoCurso = document.getElementById("campo-codigo-curso");
+    const botonInscribir = document.getElementById("boton-inscribir");
+    const listaCursos = document.getElementById("lista-cursos");
+
+    const tituloCursoActivo = document.getElementById("titulo-curso-activo");
+    const breadcrumbCurso = document.getElementById("breadcrumb-curso");
+    const chipsPasos = document.querySelectorAll(".chip-paso");
+    const subseccionesCurso = document.querySelectorAll(".subseccion-curso");
+
+    const botonVolverCursos = document.getElementById("boton-volver-cursos");
+    const botonVolverInicioCurso = document.getElementById("boton-volver-inicio-curso");
+    const botonEnviarRespuestas = document.getElementById("boton-enviar-respuestas");
+
+    // Video
+    const videoCasoElemento = document.getElementById("video-caso");
+    const fuenteVideoCaso = document.getElementById("fuente-video-caso");
+    const tituloCasoVideo = document.getElementById("titulo-caso-video");
+
+    function mostrarError(texto){
+      mensajeError.textContent = texto;
+      mensajeError.style.display = "block";
+      mensajeExito.style.display = "none";
+    }
+
+    function mostrarExito(texto){
+      mensajeExito.textContent = texto;
+      mensajeExito.style.display = "block";
+      mensajeError.style.display = "none";
+    }
+
+    // ====== LOGIN ======
+    formularioLogin.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const correo = campoCorreo.value.trim();
+      const contrasena = campoContrasena.value.trim();
+
+      if (!correo || !contrasena) {
+        mostrarError("Debes completar tu correo institucional y tu contraseña.");
+        return;
+      }
+
+      const dominioValido = /@alumnos\.ucn\.cl$/i.test(correo);
+
+      if (!dominioValido) {
+        mostrarError("Para acceder debes usar tu correo institucional que termine en @alumnos.ucn.cl.");
+        return;
+      }
+
+      // Mostrar gestión de cursos
+      seccionLoginBloque.style.display = "none";
+      seccionCursos.classList.remove("seccion-oculta");
+
+      const nombreUsuario = correo.split("@")[0];
+      textoUsuario.textContent = "Sesión iniciada como: " + nombreUsuario + "@alumnos.ucn.cl";
+
+      mostrarExito("Inicio de sesión correcto. Ahora puedes gestionar tus cursos.");
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+
+    // ====== INSCRIPCIÓN DE CURSO (MAQUETA) ======
+    botonInscribir.addEventListener("click", function () {
+      const codigo = campoCodigoCurso.value.trim();
+
+      if (!codigo) {
+        mostrarError("Ingresa un código de curso para poder inscribirte.");
+        return;
+      }
+
+      const li = document.createElement("li");
+      li.className = "curso-item";
+      li.dataset.codigo = codigo.toUpperCase();
+
+      const contenedorTexto = document.createElement("div");
+
+      const spanCodigo = document.createElement("div");
+      spanCodigo.className = "curso-item__codigo";
+      spanCodigo.textContent = codigo.toUpperCase();
+
+      const spanNombre = document.createElement("div");
+      spanNombre.className = "curso-item__nombre";
+      spanNombre.textContent = "Curso inscrito desde la maqueta";
+
+      contenedorTexto.appendChild(spanCodigo);
+      contenedorTexto.appendChild(spanNombre);
+
+      const spanEstado = document.createElement("span");
+      spanEstado.className = "tag-estado";
+      spanEstado.textContent = "Entrar al curso";
+
+      li.appendChild(contenedorTexto);
+      li.appendChild(spanEstado);
+
+      listaCursos.appendChild(li);
+      campoCodigoCurso.value = "";
+
+      mostrarExito("Te has inscrito en el curso " + codigo.toUpperCase() + " (maqueta).");
+    });
+
+    // ====== ENTRAR A UN CURSO ======
+    function abrirCurso(codigo){
+      seccionCursos.classList.add("seccion-oculta");
+      seccionCursoFlujo.classList.remove("seccion-oculta");
+      tituloCursoActivo.textContent = "Curso " + codigo;
+      actualizarPasoActivo("casos");
+      mostrarSubseccionCurso("curso-casos");
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    listaCursos.addEventListener("click", function(e){
+      const li = e.target.closest(".curso-item");
+      if(!li) return;
+      const codigo = li.dataset.codigo;
+      if(!codigo) return;
+      abrirCurso(codigo);
+    });
+
+    botonVolverCursos.addEventListener("click", function(){
+      seccionCursoFlujo.classList.add("seccion-oculta");
+      seccionCursos.classList.remove("seccion-oculta");
+      actualizarPasoActivo("casos");
+      mostrarSubseccionCurso("curso-casos");
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+
+    botonVolverInicioCurso.addEventListener("click", function(){
+      actualizarPasoActivo("casos");
+      mostrarSubseccionCurso("curso-casos");
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+
+    // ====== SUBSECCIONES DENTRO DEL CURSO ======
+    function mostrarSubseccionCurso(id){
+      subseccionesCurso.forEach(sec => sec.classList.add("seccion-oculta"));
+      const obj = document.getElementById(id);
+      if(obj){
+        obj.classList.remove("seccion-oculta");
+      }
+      // actualizar breadcrumb según id
+      let texto = "";
+      switch(id){
+        case "curso-casos": texto = "Paso 1 · Selección de caso"; break;
+        case "curso-video": texto = "Paso 2 · Video del caso"; break;
+        case "curso-datos": texto = "Paso 3 · Datos y síntomas"; break;
+        case "curso-examen": texto = "Paso 4 · Examen físico"; break;
+        case "curso-diagnostico": texto = "Paso 5 · Diagnóstico"; break;
+        case "curso-plan": texto = "Paso 6 · Plan de tratamiento"; break;
+        case "curso-resumen": texto = "Paso 7 · Resumen del caso"; break;
+      }
+      breadcrumbCurso.textContent = texto;
+    }
+
+    function actualizarPasoActivo(paso){
+      chipsPasos.forEach(chip=>{
+        chip.classList.toggle("chip-paso--activo", chip.dataset.paso === paso);
+      });
+    }
+
+    // Botones con data-vista-curso
+    document.addEventListener("click", function(e){
+      const btnVista = e.target.closest("[data-vista-curso]");
+      if(btnVista){
+        const id = btnVista.dataset.vistaCurso;
+        if(id === "curso-resumen"){
+          construirResumen();
+          actualizarPasoActivo("resumen");
+        }else if(id === "curso-plan"){
+          actualizarPasoActivo("plan");
+        }else if(id === "curso-diagnostico"){
+          actualizarPasoActivo("diagnostico");
+        }else if(id === "curso-examen"){
+          actualizarPasoActivo("examen");
+        }else if(id === "curso-datos"){
+          actualizarPasoActivo("datos");
+        }else if(id === "curso-video"){
+          actualizarPasoActivo("video");
+        }else if(id === "curso-casos"){
+          actualizarPasoActivo("casos");
+        }
+        mostrarSubseccionCurso(id);
+      }
+
+      // Botón ver video del caso
+      const btnCaso = e.target.closest("[data-accion='ver-video']");
+      if(btnCaso){
+        const caso = btnCaso.dataset.caso || "";
+        const src = btnCaso.dataset.src || "";
+        tituloCasoVideo.textContent = "Video del Caso " + caso;
+        if(src){
+          fuenteVideoCaso.src = src;
+          videoCasoElemento.load();
+        }
+        actualizarPasoActivo("video");
+        mostrarSubseccionCurso("curso-video");
+      }
+    });
+
+    // ====== RESUMEN ======
+    function textoCorto(t){
+      if(!t) return "-";
+      return t.length > 150 ? t.slice(0,147) + "…" : t;
+    }
+
+    function esc(t){
+      return (t || "").replace(/[&<>"]/g, function(m){
+        return ({ "&":"&amp;","<":"&lt;",">":"&gt;" })[m] || m;
+      });
+    }
+
+    function construirResumen(){
+      const leer = (id)=> {
+        const el = document.getElementById(id);
+        return el ? el.value.trim() : "";
+      };
+
+      const datos = {
+        nombre: leer("paciente_nombre"),
+        edad: leer("paciente_edad"),
+        genero: leer("paciente_genero"),
+        motivo: leer("motivo"),
+        antecedentes: leer("antecedentes"),
+        notas_datos: leer("notas_datos"),
+        eva: leer("eva"),
+        inicio: leer("inicio"),
+        localizacion: leer("localizacion"),
+        descripcion_sintomas: leer("descripcion_sintomas"),
+        inspeccion: leer("inspeccion"),
+        movilidad: leer("movilidad"),
+        pruebas: leer("pruebas"),
+        impresion: leer("impresion"),
+        cie10: leer("cie10"),
+        prioridad: leer("prioridad"),
+        notas_dx: leer("notas_dx"),
+        objetivos: leer("objetivos"),
+        intervenciones: leer("intervenciones"),
+        frecuencia: leer("frecuencia")
+      };
+
+      const filas = [
+        [
+          "Datos del paciente",
+          `${datos.nombre || "-"}, ${datos.edad || "-"} años, ${datos.genero || "-"}. Motivo de consulta: ${datos.motivo || "-"}. Antecedentes: ${datos.antecedentes || "-"}.`
+        ],
+        [
+          "Síntomas",
+          `Dolor (EVA): ${datos.eva || "-"} · Inicio: ${datos.inicio || "-"} · Localización: ${datos.localizacion || "-"}. Descripción: ${textoCorto(datos.descripcion_sintomas)}`
+        ],
+        [
+          "Examen físico",
+          `Inspección: ${textoCorto(datos.inspeccion)} · Movilidad: ${textoCorto(datos.movilidad)} · Pruebas específicas: ${textoCorto(datos.pruebas)}`
+        ],
+        [
+          "Diagnóstico",
+          `Impresión clínica: ${datos.impresion || "-"} · CIE-10: ${datos.cie10 || "-"} · Prioridad: ${datos.prioridad || "-"}. Notas: ${textoCorto(datos.notas_dx)}`
+        ],
+        [
+          "Plan de tratamiento",
+          `Objetivos: ${textoCorto(datos.objetivos)} · Intervenciones: ${textoCorto(datos.intervenciones)} · Frecuencia/duración: ${textoCorto(datos.frecuencia)}`
+        ]
+      ];
+
+      const tbody = document.getElementById("tabla-resumen-curso");
+      tbody.innerHTML = "";
+      filas.forEach(([bloque, desc])=>{
+        const tr = document.createElement("tr");
+        const td1 = document.createElement("td");
+        const td2 = document.createElement("td");
+        td1.textContent = bloque;
+        td2.innerHTML = esc(desc);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Botón "Enviar respuestas" 
+    if (botonEnviarRespuestas) {
+      botonEnviarRespuestas.addEventListener("click", () => {
+        alert("Respuestas enviadas");
+      });
+    }
+
+    // Año del footer
+    document.getElementById("anio").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
