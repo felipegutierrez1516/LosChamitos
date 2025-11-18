@@ -12,6 +12,12 @@ class Estudiante(models.Model):
 
     def __str__(self):
         return str(self.id) + '-' + self.nombre
+    
+    class Meta:
+        verbose_name = 'Estudiante'
+        verbose_name_plural = 'Estudiantes'
+        ordering = ['nombre']
+
 
 class Progreso(models.Model):
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
@@ -21,7 +27,13 @@ class Progreso(models.Model):
     fecha_actualizacion = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.id) + '-' + self.nombre
+        return str(self.id)
+    
+    class Meta:
+        verbose_name = 'Progreso'
+        verbose_name_plural = 'Progresos'
+        ordering = ['id']
+
 
 class Solicitud_Inscripcion(models.Model):
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
@@ -30,3 +42,11 @@ class Solicitud_Inscripcion(models.Model):
     estado = models.CharField('Estado', max_length=10, choices=[('pendiente', 'Pendiente'), ('aceptada', 'Aceptada'), ('rechazada', 'Rechazada')])
     comentario = models.TextField('Comentario del estudiante', blank=True)
     fecha_solicitud = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id)
+    
+    class Meta:
+        verbose_name = 'Solicitud de Inscripción'
+        verbose_name_plural = 'Solicitudes de Inscripción'
+        ordering = ['id']

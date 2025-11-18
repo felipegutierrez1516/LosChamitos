@@ -12,3 +12,8 @@ class Tema_Interrogacion(models.Model):
 
     def __str__(self):
         return str(self.id) + '-' + self.nombre
+    
+    class Meta:
+        verbose_name = 'Tema de Interrogación'
+        verbose_name_plural = 'Temas de Interrogación'
+        ordering = ['nombre']

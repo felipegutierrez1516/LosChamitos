@@ -1,0 +1,49 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #5fdcdc;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .logo img {
+  height: 50px;
+}
+
+.user-info span {
+  margin-right: 15px;
+}
+
+.sidebar {
+  width: 200px;
+  float: left;
+  background-color: #e0f7f7;
+  height: 100vh;
+  padding: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.main-content {
+  margin-left: 220px;
+  padding: 20px;
+}
+
+.btn-inscribir {
+  background-color: #a9fcfc;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}

@@ -12,6 +12,13 @@ class Paciente_Ficticio(models.Model):
 
     def __str__(self):
         return str(self.id) + '-' + self.nombre
+    
+    class Meta:
+        verbose_name = 'Paciente Ficticio'
+        verbose_name_plural = 'Pacientes Ficticios'
+        ordering = ['nombre']
+
+
 
 class Etapa(models.Model):
     nombre = models.CharField('Nombre de la Etapa', max_length=150)
@@ -22,6 +29,12 @@ class Etapa(models.Model):
 
     def __str__(self):
         return str(self.id) + '-' + self.nombre
+    
+    class Meta:
+        verbose_name = 'Etapa'
+        verbose_name_plural = 'Etapas'
+        ordering = ['nombre']
+
 
 class Partes_del_Cuerpo(models.Model):
     etapa = models.ForeignKey(Etapa, on_delete=models.CASCADE)
@@ -33,3 +46,8 @@ class Partes_del_Cuerpo(models.Model):
 
     def __str__(self):
         return str(self.id) + '-' + self.nombre
+    
+    class Meta:
+        verbose_name = 'Parte del Cuerpo'
+        verbose_name_plural = 'Partes del Cuerpo'
+        ordering = ['nombre']

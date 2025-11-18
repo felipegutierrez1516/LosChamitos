@@ -14,6 +14,11 @@ class Evaluacion(models.Model):
     
     def __str__(self):
        return str(self.id) + '-' + self.nombre
+    
+    class Meta:
+        verbose_name = 'Evaluación'
+        verbose_name_plural = 'Evaluaciones'
+        ordering = ['nombre']
 
 class Respuesta_Evaluacion(models.Model):
     evaluacion = models.ForeignKey(Evaluacion, on_delete=models.CASCADE)
@@ -26,4 +31,9 @@ class Respuesta_Evaluacion(models.Model):
     puntaje_obtenido = models.FloatField('Puntaje', default=0)
 
     def __str__(self):
-        return str(self.id) + '-' + self.nombre
+        return str(self.id)
+    
+    class Meta:
+        verbose_name = 'Respuesta Evaluación'
+        verbose_name_plural = 'Respuestas Evaluaciones'
+        ordering = ['id']

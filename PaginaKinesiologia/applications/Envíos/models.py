@@ -15,4 +15,9 @@ class Envio_Docente(models.Model):
     comentario_docente = models.TextField('Comentario del Docente', blank=True)
 
     def __str__(self):
-        return str(self.id) + '-' + self.nombre
+        return str(self.id)
+    
+    class Meta:
+        verbose_name = 'Envio Docente'
+        verbose_name_plural = 'Envios Docentes'
+        ordering = ['id']

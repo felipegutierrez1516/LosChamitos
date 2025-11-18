@@ -11,6 +11,12 @@ class Docente(models.Model):
 
     def __str__(self):
         return str(self.id) + '-' + self.nombre
+    
+    class Meta:
+        verbose_name = 'Docente'
+        verbose_name_plural = 'Docentes'
+        ordering = ['nombre']
+
 
 class Aprendizaje_Esperado(models.Model):
     nombre = models.CharField('Nombre del Objetivo', max_length=150)
@@ -19,6 +25,12 @@ class Aprendizaje_Esperado(models.Model):
 
     def __str__(self):
         return str(self.id) + '-' + self.nombre
+    
+    class Meta:
+        verbose_name = 'Aprendizaje Esperado'
+        verbose_name_plural = 'Aprendizajes Esperados'
+        ordering = ['nombre']
+
 
 class Curso(models.Model):
     nombre = models.CharField('Nombre del Curso', max_length=150)
@@ -32,6 +44,12 @@ class Curso(models.Model):
 
     def __str__(self):
         return str(self.id) + '-' + self.nombre
+    
+    class Meta:
+        verbose_name = 'Curso'
+        verbose_name_plural = 'Cursos'
+        ordering = ['nombre']
+
 
 class Categoria_Clinica(models.Model):
     nombre = models.CharField('Categoría Clínica', max_length=150)
@@ -40,3 +58,8 @@ class Categoria_Clinica(models.Model):
 
     def __str__(self):
         return str(self.id) + '-' + self.nombre
+    
+    class Meta:
+        verbose_name = 'Categoría Clínica'
+        verbose_name_plural = 'Categorías Clínicas'
+        ordering = ['nombre']
