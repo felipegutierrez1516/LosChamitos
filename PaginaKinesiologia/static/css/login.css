@@ -1,49 +1,52 @@
 body {
-  font-family: Arial, sans-serif;
-}
-
-.navbar {
-  background-color: #5fdcdc;
-  padding: 10px;
+  font-family: sans-serif;
+  background-color: #f0f4f8;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-}
-
-.navbar .logo img {
-  height: 50px;
-}
-
-.user-info span {
-  margin-right: 15px;
-}
-
-.sidebar {
-  width: 200px;
-  float: left;
-  background-color: #e0f7f7;
   height: 100vh;
-  padding: 20px;
 }
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
+.login-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  width: 350px;
 }
-
-.sidebar ul li {
-  margin-bottom: 10px;
+.logo {
+  width: 100px;
+  margin-bottom: 1rem;
 }
-
-.main-content {
-  margin-left: 220px;
-  padding: 20px;
+.google-btn {
+  display: block;
+  margin: 0.5rem 0;
+  background-color: #4285F4;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  text-decoration: none;
 }
-
-.btn-inscribir {
-  background-color: #a9fcfc;
+input {
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+}
+button {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #005aa7;
+  color: white;
   border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
+  border-radius: 4px;
 }
+.forgot-link {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+footer {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
