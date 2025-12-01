@@ -5,4 +5,3 @@ from .models import *
 
 admin.site.register(Evaluacion)
 admin.site.register(Respuesta_Evaluacion)
-admin.site.register(Envio_Docente)
