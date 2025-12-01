@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Motivo de Consulta - {{ paciente.nombre }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Estilos UCN */
+    .bg-ucn { background-color: #003057 !important; color: white; }
+    .text-ucn { color: #003057 !important; }
+
+    /* Contenedor del Video */
+    .video-container {
+        position: relative;
+        width: 100%;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        background-color: #000;
+        aspect-ratio: 16/9; 
+        margin-bottom: 1.5rem;
+    }
+    
+    .video-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    /* Caja de Relato */
+    .relato-box {
+        background-color: #f8f9fa;
+        border-left: 4px solid #003057;
+        padding: 1rem 1.5rem;
+        border-radius: 0 6px 6px 0;
+        font-size: 0.95rem;
+    }
+
+    /* Botones */
+    .btn-siguiente {
+        background-color: #003057;
+        color: white;
+        border-radius: 8px;
+        padding: 8px 25px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+        border: 1px solid #003057;
+    }
+    .btn-siguiente:hover {
+        background-color: #002240;
+        color: white;
+        transform: translateX(3px);
+        box-shadow: 0 4px 12px rgba(0, 48, 87, 0.2);
+    }
+
+    .btn-volver {
+        border-radius: 8px;
+        padding: 8px 25px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        border: 1px solid #6c757d; 
+    }
+    .btn-volver:hover {
+        background-color: #e2e6ea;
+        color: #333;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mb-5">
+    <div class="col-md-10 col-lg-9">
+        
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2 small">
+                <li class="breadcrumb-item"><a href="{% url 'inicio_estudiante' %}" class="text-decoration-none text-muted">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'sala_espera' paciente.caso.id %}" class="text-decoration-none text-muted">Sala de Espera</a></li>
+                <li class="breadcrumb-item active text-ucn fw-bold" aria-current="page">Evaluación</li>
+            </ol>
+        </nav>
+
+        <div class="card shadow border-0 rounded-3 bg-white">
+            <div class="card-body p-4">
+                
+                <div class="d-flex align-items-center mb-4 border-bottom pb-3">
+                    <div class="bg-light rounded-circle p-2 text-ucn me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                        <i class="bi bi-person-fill fs-3"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold text-ucn mb-0">{{ paciente.nombre }}</h4>
+                        <span class="text-muted small">
+                            <i class="bi bi-calendar3 me-1"></i> {{ paciente.edad }} años
+                        </span>
+                    </div>
+                </div>
+
+                <div class="alert alert-light border-start border-4 border-info shadow-sm mb-3">
+                    <i class="bi bi-info-circle-fill text-info me-2"></i>
+                    <span class="fw-semibold text-dark">Instrucción:</span> 
+                    Visualiza el siguiente video con atención para comprender el motivo de consulta del paciente.
+                </div>
+
+                <div class="video-container">
+                    {% if etapa and etapa.video %}
+                        <iframe 
+                            src="https://www.youtube.com/embed/{{ etapa.video|cut:'https://www.youtube.com/watch?v=' }}?rel=0" 
+                            title="Video de la Etapa"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    {% else %}
+                        <div class="d-flex align-items-center justify-content-center h-100 bg-light text-muted">
+                            <div class="text-center">
+                                <i class="bi bi-camera-video-off display-4 opacity-50"></i>
+                                <p class="mt-2 small mb-0">No hay video disponible para esta etapa.</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="fw-bold text-secondary mb-2 small text-uppercase">
+                        <i class="bi bi-chat-left-text-fill me-2"></i>Relato del Paciente
+                    </h6>
+                    <div class="relato-box">
+                        <p class="mb-0 text-secondary fst-italic">
+                            "{{ etapa.descripcion }}" 
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-2">
+                    
+                    <a href="{% url 'sala_espera' paciente.caso.id %}" class="btn btn-outline-secondary btn-volver shadow-sm">
+                        <i class="bi bi-arrow-left me-2"></i>Sala de Espera
+                    </a>
+
+                    <a href="{% url 'preguntas_motivo' paciente.id %}" class="btn btn-siguiente shadow-sm">
+                        Ir a Preguntas <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

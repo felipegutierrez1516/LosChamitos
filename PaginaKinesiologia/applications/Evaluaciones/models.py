@@ -1,29 +1,53 @@
 from django.db import models
-from applications.Estudiante.models import *
-from applications.Caso_Clínico.models import *
+from applications.clinica.models import Paciente_Ficticio, Etapa
+from applications.usuarios.models import Estudiante, Docente
 
 # Create your models here.
 
+
 class Evaluacion(models.Model):
-    nombre = models.CharField('Nombre de la Evaluación', max_length=150)
-    descripcion = models.TextField('Descripción')
+    nombre = models.CharField(max_length=150)
+    descripcion = models.TextField()
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
     paciente = models.ForeignKey(Paciente_Ficticio, on_delete=models.CASCADE)
-    etapa = models.ForeignKey(Etapa, on_delete=models.CASCADE)
     fecha_evaluacion = models.DateField()
+    diagnostico = models.TextField()
+    tiempo_total = models.DurationField()
+    respuestas_correctas_primer_intento = models.IntegerField(default=0)
+    estado = models.CharField(
+        max_length=20, 
+        choices=[('en_curso', 'En Curso'), ('finalizada', 'Finalizada')],
+        default='en_curso'
+    )
+
+    puntaje_diagnostico = models.FloatField(null=True, blank=True, help_text="Puntaje otorgado por el docente (ej: 1 a 7)")
+    comentario_docente = models.TextField(null=True, blank=True, help_text="Retroalimentación general del docente")
     
     def __str__(self):
-       return str(self.id) + '-' + self.nombre
+        return f"{self.id} - {self.nombre} ({self.estado})"
+
 
 class Respuesta_Evaluacion(models.Model):
     evaluacion = models.ForeignKey(Evaluacion, on_delete=models.CASCADE)
     etapa = models.ForeignKey(Etapa, on_delete=models.CASCADE)
-    descripcion = models.TextField('Detalle')
-    respuestas = models.TextField('Respuesta del estudiante')
-    retroalimentacion = models.TextField('Retroalimentación')
-    correcta = models.BooleanField('¿Correcta?')
+    descripcion = models.TextField()
+    respuesta_estudiante = models.TextField()
+    retroalimentacion = models.TextField()
+    correcta = models.BooleanField()
     fecha_respuesta = models.DateTimeField(auto_now_add=True)
-    puntaje_obtenido = models.FloatField('Puntaje', default=0)
+    puntaje_obtenido = models.FloatField(default=0)
 
     def __str__(self):
-        return str(self.id) + '-' + self.nombre
+        return f"{self.id}"
+
+
+class Envio_Docente(models.Model):
+    docente = models.ForeignKey(Docente, on_delete=models.CASCADE)
+    respuesta_evaluacion = models.ForeignKey(Respuesta_Evaluacion, on_delete=models.CASCADE)
+    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
+    fecha_entrega = models.DateField()
+    estado_revision = models.CharField(max_length=15, choices=[('pendiente','Pendiente'),('revisado','Revisado'),('aprobado','Aprobado')])
+    comentario_docente = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.id}"
