@@ -5,11 +5,7 @@ services:
     environment:
       POSTGRES_DB: db_paginakinesiologia
       POSTGRES_USER: user_paginakinesiologia
-<<<<<<< Updated upstream
       POSTGRES_PASSWORD: 'barca'
-=======
-      POSTGRES_PASSWORD: '07112002'
->>>>>>> Stashed changes
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:

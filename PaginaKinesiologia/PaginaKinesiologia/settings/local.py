@@ -14,7 +14,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME' : 'db_paginakinesiologia',
         'USER' : 'user_paginakinesiologia',
-        'PASSWORD' : 'barca',
+        'PASSWORD' :'fede2020',
         'HOST' : 'localhost',
         'PORT' : '5432'
     }
@@ -25,3 +25,6 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025

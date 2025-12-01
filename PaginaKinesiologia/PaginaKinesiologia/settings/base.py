@@ -37,13 +37,12 @@ INSTALLED_APPS = [
 
     #APLICACIONES PROPIAS
 
-    'applications.Caso_Clínico',
-    'applications.Cursos',
-    'applications.Envíos',
-    'applications.Estudiante',
-    'applications.Evaluaciones',
-    'applications.Tema',
-    'applications.Inicio',
+    'applications.usuarios',
+    'applications.cursos',
+    'applications.clinica',
+    'applications.evaluaciones',
+    'applications.inscripciones',
+    'applications.progreso',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +66,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -114,38 +114,55 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 JAZZMIN_SETTINGS = {
-    "site_title": "Administración Kinesiología UCN",
-    "site_header": "Administración de Kinesiología",
+    "site_title": "Kinesiología UCN",
+    "site_header": "Administración Kinesiología",
     "welcome_sign": "Bienvenid@ al Sistema UCN",
     "site_brand": "UCN Kinesiología",
     "site_logo": "img/logo_UCN.png",
     "custom_css": "css/admin_custom.css",
     "custom_js": None,
+    "copyright": "Universidad Católica del Norte",
 
-    "icons": {
-        "auth.User": "fas fa-user",
+"icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
-        "Caso_Clínico.Paciente_Ficticio": "fas fa-user-injured",
-        "Caso_Clínico.Etapa": "fas fa-stream",
-        "Caso_Clínico.Partes_del_Cuerpo": "fas fa-person",
-        "Cursos.Docente": "fas fa-chalkboard-teacher",
-        "Cursos.Categoria_Clinica": "fas fa-dna",
-        "Cursos.Curso": "fas fa-book",
-        "Cursos.Aprendizaje_Esperado": "fas fa-bullseye",
-        "Estudiante.Estudiante": "fas fa-user-graduate",
-        "Estudiante.Solicitud_Inscripcion": "fas fa-file-signature",
-        "Estudiante.Progreso": "fas fa-chart-line",
-        "Tema.Tema_Interrogacion": "fas fa-question-circle",
-        "Evaluaciones.Evaluacion": "fas fa-clipboard-check",
-        "Evaluaciones.Respuesta_Evaluacion": "fas fa-check-square",
-        "Envíos.Envio_Docente": "fas fa-envelope-open",
-    }
+        "usuarios.Perfil": "fas fa-id-card",
+        "usuarios.Estudiante": "fas fa-user-graduate",
+        "usuarios.Docente": "fas fa-chalkboard-teacher",
+        "cursos.Curso": "fas fa-book-medical",
+        "cursos.Aprendizaje_Esperado": "fas fa-bullseye",
+        "clinica.Caso": "fas fa-file-medical-alt",
+        "clinica.Paciente_Ficticio": "fas fa-procedures",
+        "clinica.Etapa": "fas fa-stream",
+        "clinica.Tema_Interrogacion": "fas fa-user-md",
+        "clinica.Partes_del_Cuerpo": "fas fa-child",
+        "evaluaciones.Evaluacion": "fas fa-clipboard-check",
+        "evaluaciones.Respuesta_Evaluacion": "fas fa-tasks",
+        "evaluaciones.Envio_Docente": "fas fa-paper-plane",
+        "inscripciones.Solicitud_Inscripcion": "fas fa-file-signature",
+        "progreso.Progreso": "fas fa-chart-line",
+    },
+
+    "order_with_respect_to": ["usuarios", "cursos", "inscripciones", "clinica", "evaluaciones", "progreso", "auth"],
+
+    "topmenu_links": [
+        {"name": "Volver al Sitio",  "url": "/", "permissions": ["auth.view_user"]},
+    ],
+    "user_avatar": None,
 }
 
+
+
+LOGIN_URL = '/'  # al intentar acceder a algo protegido, redirige al login
+LOGIN_REDIRECT_URL = '/'  # después de hacer login, va a esta URL
+LOGOUT_REDIRECT_URL = '/'
 
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+
 # 🔹 Agrega esta línea:
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
