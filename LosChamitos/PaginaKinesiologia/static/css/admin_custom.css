@@ -1,0 +1,105 @@
+:root {
+  --ucn-blue: #003057;
+  --ucn-green: #65d7ad;
+  --ucn-green-dark: #4da885;
+  --light-bg: #f4f6f9;
+}
+
+/* 1. SUAVIZAR EL FONDO Y LA FUENTE */
+body {
+    background-color: var(--light-bg);
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+/* 2. TARJETAS (CARDS) MODERNAS CON SOMBRA */
+.card {
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+    transition: transform 0.2s;
+}
+
+/* 3. CABECERAS DE TABLAS MODERNAS */
+.card-primary.card-outline {
+    border-top: 3px solid var(--ucn-blue) !important;
+}
+
+table.table thead th {
+    background-color: #f8f9fa !important;
+    color: var(--ucn-blue) !important;
+    border-bottom: 2px solid #dee2e6 !important;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+/* Hover en filas de tablas */
+table.table tbody tr:hover {
+    background-color: rgba(101, 215, 173, 0.1) !important; /* Verde UCN muy suave */
+}
+
+/* 4. BOTONES REDONDEADOS Y SUAVES */
+.btn {
+    border-radius: 50px !important; /* Botones píldora */
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Botón Primario (Guardar) */
+.btn-primary, .btn-info {
+    background-color: var(--ucn-blue) !important;
+    border-color: var(--ucn-blue) !important;
+}
+
+.btn-primary:hover, .btn-info:hover {
+    background-color: #002240 !important;
+    box-shadow: 0 4px 10px rgba(0, 48, 87, 0.3);
+}
+
+/* Botón de Acción/Éxito (Verde UCN) */
+.btn-success {
+    background-color: var(--ucn-green) !important;
+    border-color: var(--ucn-green) !important;
+    color: var(--ucn-blue) !important;
+}
+
+/* 5. SIDEBAR (BARRA LATERAL) */
+/* Si usas 'sidebar-light-primary' en settings.py, esto resalta el item activo */
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: var(--ucn-blue) !important;
+    color: #ffffff !important;
+    border-radius: 0 25px 25px 0 !important; /* Borde redondeado solo a la derecha */
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Iconos del sidebar */
+.nav-sidebar .nav-item > .nav-link i {
+    color: var(--ucn-blue);
+}
+.nav-sidebar .nav-item > .nav-link.active i {
+    color: #fff;
+}
+
+/* 6. LOGIN MEJORADO */
+.login-page {
+    background: linear-gradient(135deg, var(--ucn-blue) 0%, #001f3d 100%) !important;
+}
+
+.login-box {
+    width: 400px !important;
+}
+
+.login-card-body {
+    border-radius: 15px !important;
+    padding: 40px !important;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3) !important;
+}
+
+.login-logo a {
+    color: white !important;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
