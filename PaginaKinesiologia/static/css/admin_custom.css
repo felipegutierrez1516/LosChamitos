@@ -70,9 +70,15 @@ a.btn-secondary:hover {
 
 /* Ajuste del tamaño del logo en la pantalla de login */
 .login-logo img {
+<<<<<<< Updated upstream
     width: 200px !important;  /* puedes probar con 150 o 180 si prefieres */
     height: auto !important;
     margin: 20px auto !important;
+=======
+    width: 500px !important;  /* puedes probar con 150 o 180 si prefieres */
+    height: auto !important;
+    margin: 200 auto !important;
+>>>>>>> Stashed changes
     display: block;
 }
 
