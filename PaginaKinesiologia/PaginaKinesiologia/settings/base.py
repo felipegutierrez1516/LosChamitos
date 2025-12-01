@@ -37,13 +37,12 @@ INSTALLED_APPS = [
 
     #APLICACIONES PROPIAS
 
-    'applications.Caso_Clínico',
-    'applications.Cursos',
-    'applications.Envíos',
-    'applications.Estudiante',
-    'applications.Evaluaciones',
-    'applications.Tema',
-    'applications.Inicio',
+    'applications.usuarios',
+    'applications.cursos',
+    'applications.clinica',
+    'applications.evaluaciones',
+    'applications.inscripciones',
+    'applications.progreso',
 ]
 
 MIDDLEWARE = [
@@ -122,30 +121,18 @@ JAZZMIN_SETTINGS = {
     "custom_css": "css/admin_custom.css",
     "custom_js": None,
 
-    "icons": {
-        "auth.User": "fas fa-user",
-        "auth.Group": "fas fa-users",
-        "Caso_Clínico.Paciente_Ficticio": "fas fa-user-injured",
-        "Caso_Clínico.Etapa": "fas fa-stream",
-        "Caso_Clínico.Partes_del_Cuerpo": "fas fa-person",
-        "Cursos.Docente": "fas fa-chalkboard-teacher",
-        "Cursos.Categoria_Clinica": "fas fa-dna",
-        "Cursos.Curso": "fas fa-book",
-        "Cursos.Aprendizaje_Esperado": "fas fa-bullseye",
-        "Estudiante.Estudiante": "fas fa-user-graduate",
-        "Estudiante.Solicitud_Inscripcion": "fas fa-file-signature",
-        "Estudiante.Progreso": "fas fa-chart-line",
-        "Tema.Tema_Interrogacion": "fas fa-question-circle",
-        "Evaluaciones.Evaluacion": "fas fa-clipboard-check",
-        "Evaluaciones.Respuesta_Evaluacion": "fas fa-check-square",
-        "Envíos.Envio_Docente": "fas fa-envelope-open",
-    }
+
 }
 
+LOGIN_URL = '/'  # al intentar acceder a algo protegido, redirige al login
+LOGIN_REDIRECT_URL = '/'  # después de hacer login, va a esta URL
+LOGOUT_REDIRECT_URL = '/'
 
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+
 # 🔹 Agrega esta línea:
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
