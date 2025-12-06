@@ -76,8 +76,8 @@
             <ol class="breadcrumb mb-2 small">
                 <li class="breadcrumb-item"><a href="{% url 'inicio_estudiante' %}" class="text-decoration-none text-muted">Inicio</a></li>
                 <li class="breadcrumb-item"><a href="{% url 'sala_espera' paciente.caso.id %}" class="text-decoration-none text-muted">Sala de Espera</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'motivo_consulta' paciente.id %}" class="text-decoration-none text-muted">Motivo</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'preguntas_motivo' paciente.id %}" class="text-decoration-none text-muted">Anamnesis</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'motivo_consulta' paciente.id %}" class="text-decoration-none text-muted">Consulta</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'preguntas_motivo' paciente.id %}" class="text-decoration-none text-muted">Preguntas Motivo</a></li>
                 <li class="breadcrumb-item active text-ucn fw-bold" aria-current="page">Síntomas</li>
             </ol>
         </nav>
@@ -103,19 +103,20 @@
                 </div>
 
                 <div class="video-container">
-                    {% if video_id %}
+                    {% if etapa and etapa.video %}
                         <iframe 
-                            src="https://www.youtube.com/embed/{{ video_id }}?rel=0" 
-                            title="Video de Síntomas"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            width="100%" 
+                            height="100%"
+                            src="{{ etapa.video_embed_url }}" 
+                            title="Video del Paciente"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            referrerpolicy="strict-origin-when-cross-origin"
                             allowfullscreen>
                         </iframe>
                     {% else %}
                         <div class="d-flex align-items-center justify-content-center h-100 bg-light text-muted">
-                            <div class="text-center">
-                                <i class="bi bi-camera-video-off display-4 opacity-50"></i>
-                                <p class="mt-2 small mb-0">No hay video disponible para esta etapa.</p>
-                            </div>
+                            <p>No hay video disponible.</p>
                         </div>
                     {% endif %}
                 </div>

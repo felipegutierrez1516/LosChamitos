@@ -11,8 +11,13 @@ class Caso(models.Model):
     estado = models.CharField(max_length=20, choices=[('Activo', 'Activo'), ('Inactivo', 'Inactivo')])
 
     def __str__(self):
-        return self.titulo
+        return f"{self.titulo} ({self.estado})"
     
+    class Meta:
+        verbose_name = "Caso"
+        verbose_name_plural = "Casos"
+    
+
 
 class Paciente_Ficticio(models.Model):
     nombre = models.CharField(max_length=150)
@@ -22,17 +27,60 @@ class Paciente_Ficticio(models.Model):
     caso = models.ForeignKey(Caso, on_delete=models.CASCADE, related_name='pacientes', null=True, blank=True)
 
     def __str__(self):
-        return f"{self.id} - {self.nombre}"
+        return f"{self.nombre} - {self.caso}"
+    
+    class Meta:
+        verbose_name = "Paciente Ficticio"
+        verbose_name_plural = "Pacientes Ficticios"
 
+
+
+TIPO_ETAPA_CHOICES = [
+    ('Motivo de Consulta', 'Motivo de Consulta'),
+    ('Síntomas', 'Síntomas'),
+    ('Examen Físico', 'Examen Físico'),
+]
 
 class Etapa(models.Model):
-    nombre = models.CharField(max_length=150)
+    nombre = models.CharField(max_length=50, choices=TIPO_ETAPA_CHOICES)
     descripcion = models.TextField()
-    video = models.URLField()
+    video = models.URLField(null=True, blank=True)
     paciente = models.ForeignKey(Paciente_Ficticio, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.id} - {self.nombre}"
+        return f"{self.nombre} - {self.paciente.nombre}"
+    
+    class Meta:
+        verbose_name = "Etapa"
+        verbose_name_plural = "Etapas"
+    
+    @property
+    def video_embed_url(self):
+        """
+        Transforma la URL normal de YouTube a formato Embed.
+        Soporta:
+        - https://www.youtube.com/watch?v=ID
+        - https://youtu.be/ID
+        - https://www.youtube.com/shorts/ID  <-- NUEVO SOPORTE
+        """
+        url = self.video
+        if not url:
+            return ""
+            
+        # Caso 1: URL estándar (watch?v=)
+        if "watch?v=" in url:
+            return url.replace("watch?v=", "embed/")
+        
+        # Caso 2: URL corta (youtu.be/)
+        if "youtu.be/" in url:
+            return url.replace("youtu.be/", "www.youtube.com/embed/")
+            
+        # Caso 3: YouTube Shorts (shorts/)
+        if "shorts/" in url:
+            return url.replace("shorts/", "embed/")
+            
+        return url
+
 
 
 class Tema_Interrogacion(models.Model):
@@ -43,7 +91,11 @@ class Tema_Interrogacion(models.Model):
     justificacion_error = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.id}"
+        return f"{self.pregunta[:50]}... - {self.etapa.nombre}"
+    
+    class Meta:
+        verbose_name = "Tema de Interrogación"
+        verbose_name_plural = "Temas de Interrogación"
 
 
 
@@ -103,3 +155,7 @@ class Partes_del_Cuerpo(models.Model):
 
     def __str__(self):
         return f"{self.id} - {self.nombre}"
+    
+    class Meta:
+        verbose_name = "Parte del Cuerpo"
+        verbose_name_plural = "Partes del Cuerpo"
