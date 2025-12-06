@@ -3,9 +3,9 @@ services:
     image: postgres:17
     container_name: paginakinesiologia-db
     environment:
-      POSTGRES_DB: db_paginakinesiologia
-      POSTGRES_USER: user_paginakinesiologia
-      POSTGRES_PASSWORD: 'barca'
+      POSTGRES_DB: NAME_DB
+      POSTGRES_USER: USER_DB
+      POSTGRES_PASSWORD: 'PASSWORD'
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
